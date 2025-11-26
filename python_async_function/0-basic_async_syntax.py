@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+"""Module for asynchronous operations."""
+
+
 import asyncio
 import random
 
