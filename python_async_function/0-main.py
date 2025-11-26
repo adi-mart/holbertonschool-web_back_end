@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+"""Test script for the wait_random coroutine."""
+
 
 import asyncio
 
