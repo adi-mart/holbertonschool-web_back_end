@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+"""Test script for the make_multiplier function."""
+
 
 make_multiplier = __import__('8-make_multiplier').make_multiplier
 print(make_multiplier.__annotations__)

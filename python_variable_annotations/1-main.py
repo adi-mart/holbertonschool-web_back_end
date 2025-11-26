@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""Test script for the concat function."""
+
+
 concat = __import__('1-concat').concat
 
 str1 = "egg"

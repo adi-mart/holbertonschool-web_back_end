@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+"""Test script for the sum_mixed_list function."""
+
 
 sum_mixed_list = __import__('6-sum_mixed_list').sum_mixed_list
 
