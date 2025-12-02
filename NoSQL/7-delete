@@ -1,2 +1,2 @@
 // script that deletes all documents in the collection
-db.school.deleteOne({ "_id" : ObjectId("692eb2133dfb89412ba855db")})
+db.school.deleteMany({name: "Holberton school"},{multi: true})
