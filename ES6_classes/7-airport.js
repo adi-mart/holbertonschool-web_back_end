@@ -4,6 +4,6 @@ export default class Airport {
 		this._code = code
 	}
 	toString() {
-		return `${this._name}`
+		return this._code
 	}
 }
