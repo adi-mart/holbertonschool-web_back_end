@@ -10,10 +10,10 @@ app.get('/', (req, res) => {
 app.get('/students', (req, res) => {
   let output = '';
   const originalConsoleLog = console.log;
-  console.log = (msg) => { output += msg + '\n'; };
+  console.log = (msg) => { output += `${msg}\n`; };
   countStudents(process.argv[2]).then(() => {
     console.log = originalConsoleLog;
-    res.send('This is the list of our students\n' + output.trim());
+    res.send(`This is the list of our students\n${output.trim()}`);
   }).catch((error) => {
     console.log = originalConsoleLog;
     res.send(`This is the list of our students\n${error.message}`);
