@@ -2,15 +2,16 @@ import { readDatabase } from '../utils';
 
 class StudentsController {
   static async getAllStudents(req, res) {
-    const dbFile = process.argv[2];
     try {
-      const students = await readDatabase(dbFile);
-      let response = 'This is the list of our students\n';
+      const students = await readDatabase(process.argv[2]);
       const fields = Object.keys(students).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
-      for (const field of fields) {
-        response += `Number of students in ${field}: ${students[field].length}. List: ${students[field].join(', ')}\n`;
-      }
-      res.status(200).send(response.trim());
+      
+      let response = 'This is the list of our students';
+      fields.forEach((field) => {
+        response += `\nNumber of students in ${field}: ${students[field].length}. List: ${students[field].join(', ')}`;
+      });
+      
+      res.status(200).send(response);
     } catch (err) {
       res.status(500).send('Cannot load the database');
     }
