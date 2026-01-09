@@ -1,36 +1,41 @@
 import { readDatabase } from '../utils';
 
 class StudentsController {
-  static async getAllStudents(req, res) {
-    try {
-      const students = await readDatabase(process.argv[2]);
-      const fields = Object.keys(students).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
-      
-      let response = 'This is the list of our students';
-      fields.forEach((field) => {
-        response += `\nNumber of students in ${field}: ${students[field].length}. List: ${students[field].join(', ')}`;
+  static getAllStudents(req, res) {
+    const database = process.argv[2];
+    readDatabase(database)
+      .then((students) => {
+        let response = 'This is the list of our students\n';
+        const fields = Object.keys(students).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+        
+        fields.forEach((field) => {
+          response += `Number of students in ${field}: ${students[field].length}. List: ${students[field].join(', ')}\n`;
+        });
+        
+        res.status(200).send(response.trim());
+      })
+      .catch(() => {
+        res.status(500).send('Cannot load the database');
       });
-      
-      res.status(200).send(response);
-    } catch (err) {
-      res.status(500).send('Cannot load the database');
-    }
   }
 
-  static async getAllStudentsByMajor(req, res) {
-    const dbFile = process.argv[2];
+  static getAllStudentsByMajor(req, res) {
     const { major } = req.params;
+    const database = process.argv[2];
+    
     if (major !== 'CS' && major !== 'SWE') {
       res.status(500).send('Major parameter must be CS or SWE');
       return;
     }
-    try {
-      const students = await readDatabase(dbFile);
-      const list = students[major] || [];
-      res.status(200).send(`List: ${list.join(', ')}`);
-    } catch (err) {
-      res.status(500).send('Cannot load the database');
-    }
+    
+    readDatabase(database)
+      .then((students) => {
+        const list = students[major] ? students[major].join(', ') : '';
+        res.status(200).send(`List: ${list}`);
+      })
+      .catch(() => {
+        res.status(500).send('Cannot load the database');
+      });
   }
 }
 
